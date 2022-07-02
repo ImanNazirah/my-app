@@ -4,9 +4,10 @@ import { Spotify } from '../models/spotify';
 import { Observable } from 'rxjs';
 import { PageableResponseModel, ResponseModel, SingleDataResponseModel } from '../models/response';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
-const baseUrl = '/api/spotify';
-// const baseUrl = 'http://localhost:8080/spotify';
+// const baseUrl = '/api/spotify';
+const baseUrl = environment.api_local+'/spotify';
 
 
 @Injectable({
