@@ -23,6 +23,16 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
     </mat-table>
+
+    <mat-paginator 
+    [pageSizeOptions]="[5, 10, 25]"
+    [length]="pageable.length"
+    [pageIndex]="pageable.pageIndex"
+    [pageSize]="pageable.pageSize"
+    (page)="handlePage($event)"
+    >
+    </mat-paginator>
+
 </div>
 
 <!-- classic table -->
