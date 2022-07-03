@@ -1,5 +1,11 @@
 <h1>Spotify List!</h1>
 
+<div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter Artist Name">
+  </mat-form-field>
+</div>
+
 <!-- Angular material table -->
 <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource">

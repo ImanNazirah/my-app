@@ -28,6 +28,8 @@ import { SpotifyUpdateComponent } from './components/spotify/spotify-update/spot
 import { SpotifyListComponent } from './components/spotify/spotify-list/spotify-list.component';
 import { TestListComponent } from './components/test/test-list/test-list.component';
 import { TestCreateComponent } from './components/test/test-create/test-create.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -60,6 +62,8 @@ import { TestCreateComponent } from './components/test/test-create/test-create.c
     LayoutModule,
     MatPaginatorModule,
     MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
     AgGridModule.withComponents([])
   ],
   providers: [],

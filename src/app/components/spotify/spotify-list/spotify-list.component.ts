@@ -27,6 +27,8 @@ export class SpotifyListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   // @ViewChild(MatSort) sort: MatSort;
 
+  inputSearch:string='';
+
   pageable : Pageable;
 
   constructor(
@@ -88,6 +90,35 @@ export class SpotifyListComponent implements OnInit {
 
      });
 
+  }
+
+  public applyFilter(event: Event) {
+
+    this.inputSearch = (<any>event).target.value;
+    this.queryParam.artistName = this.inputSearch;
+
+    if(this.inputSearch == ''){
+      this.queryParam = new Spotify();
+    }
+  
+    //get data with query with pagination and input search
+    this._spotifyService.getByQueryData(this.pageable.pageIndex,this.pageable.pageSize,this.queryParam)
+    .pipe(
+      map((response: PageableResponseModel<Spotify>) => response.data)
+    )
+    .subscribe(x => {
+
+      //to display data in table
+      this.viewListing$ = x?.content;
+      this.dataSource = new MatTableDataSource(this.viewListing$);
+
+      //to pass pagination 
+      this.pageable.length = x?.totalElements;
+      this.pageable.pageIndex = x?.number;
+      this.pageable.pageSize =  x?.size;
+
+    });
+    
   }
 
 }
