@@ -1,5 +1,40 @@
-<p>spotify-list works!</p>
-<h1>Hello from AG Grid!</h1>
-<ag-grid-angular style="width: 850px; height: 500px;" class="ag-theme-balham" [rowData]="rowData"
-    [columnDefs]="columnDefs">
-</ag-grid-angular>
+<h1>Spotify List!</h1>
+
+<!-- Angular material table -->
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource">
+  
+      <ng-container matColumnDef="artistName">
+        <mat-header-cell *matHeaderCellDef> Artist Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.artistName}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="trackName">
+        <mat-header-cell *matHeaderCellDef> Track Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.trackName}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="genre">
+        <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.genre}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+</div>
+
+<!-- classic table -->
+<!-- <table class="table-fixed">
+    <tr>
+        <td>Artist Name</td>
+        <td>Track Name</td>
+        <td>Genre</td>
+    </tr>
+    <tr *ngFor="let spotify of viewListing$">
+                    <td>{{spotify.artistName}}</td>
+                    <td>{{spotify.trackName}}</td>
+                    <td>{{spotify.genre}}</td>
+    </tr>
+</table> -->

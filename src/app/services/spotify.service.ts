@@ -51,13 +51,18 @@ export class SpotifyService {
     return this._http.delete<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id);
   }
 
-  getByQueryData(page: number = 0, pageSize: number = 10):Observable<PageableResponseModel<Spotify>>{
+  getByQueryData(page: number = 0, pageSize: number = 10, spotify:Spotify):Observable<PageableResponseModel<Spotify>>{
 
       const header = {
           params: {
               page        : '' + page,
-              pageSize    : '' + pageSize
+              pageSize    : '' + pageSize,
+              artistName  : ''+ spotify.artistName
           }
+      }
+
+      if(spotify.artistName == undefined){
+        delete (<any>header).params.artistName;// to handle : The operand of a 'delete' operator must be optional.
       }
 
       return this._http.get<PageableResponseModel<Spotify>>(baseUrl+'/search', header);

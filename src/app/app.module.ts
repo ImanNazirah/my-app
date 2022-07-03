@@ -13,6 +13,8 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { AgGridModule } from 'ag-grid-angular';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 
 //Component
@@ -56,6 +58,8 @@ import { TestCreateComponent } from './components/test/test-create/test-create.c
     MatListModule,
     FlexLayoutModule,
     LayoutModule,
+    MatPaginatorModule,
+    MatTableModule,
     AgGridModule.withComponents([])
   ],
   providers: [],
