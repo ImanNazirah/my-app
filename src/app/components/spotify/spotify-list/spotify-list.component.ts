@@ -53,12 +53,11 @@ export class SpotifyListComponent implements OnInit {
           this.viewListing$ = x?.content;
           this.dataSource = new MatTableDataSource(this.viewListing$);
 
-          //to pass pagination 
-          this.pageable.length = x?.totalElements;
-          this.pageable.pageIndex = x?.number;
-          this.pageable.pageSize =  x?.size;
-
         });
+
+        this._spotifyService.getPageable().subscribe((x:Pageable)=>{
+            this.pageable = x;
+        })
 
     }
 
@@ -83,11 +82,6 @@ export class SpotifyListComponent implements OnInit {
        this.viewListing$ = x?.content;
        this.dataSource = new MatTableDataSource(this.viewListing$);
 
-       //to pass pagination 
-       this.pageable.length = x?.totalElements;
-       this.pageable.pageIndex = x?.number;
-       this.pageable.pageSize =  x?.size;
-
      });
 
   }
@@ -111,11 +105,6 @@ export class SpotifyListComponent implements OnInit {
       //to display data in table
       this.viewListing$ = x?.content;
       this.dataSource = new MatTableDataSource(this.viewListing$);
-
-      //to pass pagination 
-      this.pageable.length = x?.totalElements;
-      this.pageable.pageIndex = x?.number;
-      this.pageable.pageSize =  x?.size;
 
     });
     
