@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Spotify } from '../models/spotify';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PageableResponseModel, ResponseModel, SingleDataResponseModel } from '../models/response';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pageable } from '../models/pageable';
 
@@ -21,6 +21,10 @@ export class SpotifyService {
  
   private _pageable$ : BehaviorSubject<Pageable> = new BehaviorSubject<Pageable>(this.defaultPageable);
 
+  private spotifyList : Spotify[] = [];
+ 
+  private _spotifyList$ : BehaviorSubject<Spotify[]> = new BehaviorSubject<Spotify[]>(this.spotifyList);
+
   getPageable(): Observable<Pageable>{
     return this._pageable$.asObservable();
   }
@@ -29,6 +33,13 @@ export class SpotifyService {
     return this._pageable$.next(pageable);
   }
 
+  getSpotifyList(): Observable<Spotify[]>{
+    return this._spotifyList$.asObservable();
+  }
+
+  setSpotifyList(spotifylist: Spotify[]){
+    return this._spotifyList$.next(spotifylist);
+  }
 
   constructor(private _http: HttpClient) { 
   }
@@ -54,7 +65,21 @@ export class SpotifyService {
 
   updateData(id: number, payload: Spotify): Observable<SingleDataResponseModel<Spotify>> {
 
-    return this._http.put<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id,payload).pipe(
+    return this._http.put<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id,payload)
+    .pipe(
+      tap((x:SingleDataResponseModel<Spotify>)=>{
+        
+          //idex of specified id
+          let index = this._spotifyList$.value.findIndex(function(element) {
+            return element.id === id;
+          });
+          // Update the data
+          this._spotifyList$.value[index] = { ...this._spotifyList$.value[index], ...x.data};
+
+          //set the newly list
+          this.setSpotifyList(this._spotifyList$.value);
+   
+      }),
       catchError(err => {
           console.log('Error updateData SpotifyService : ',err);
           throw Observable.throw;
@@ -64,7 +89,27 @@ export class SpotifyService {
   }
 
   deleteData(id: number): Observable<SingleDataResponseModel<Spotify>> {
-    return this._http.delete<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id);
+    return this._http.delete<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id)
+    .pipe(
+      tap((x:SingleDataResponseModel<Spotify>)=>{
+
+        // idex of specified id
+        let index = this._spotifyList$.value.findIndex(function(element) {
+          return element.id === id;
+        });
+        
+        // slice index with specified id
+        let newList = [...this._spotifyList$.value.slice(0, index), ...this._spotifyList$.value.slice(index + 1)];
+        
+        //set the newly list
+        this.setSpotifyList(newList);
+
+      }),
+      catchError(err => {
+          console.log('Error delete SpotifyService : ',err);
+          throw Observable.throw;
+        })
+    );
   }
 
   getByQueryData(page: number = 0, pageSize: number = 10, spotify:Spotify):Observable<PageableResponseModel<Spotify>>{
@@ -85,11 +130,13 @@ export class SpotifyService {
       .pipe(
         tap((x:PageableResponseModel<Spotify>)=>{
 
-          this.defaultPageable.length = x.data?.totalElements;
-          this.defaultPageable.pageIndex = x.data?.number;
-          this.defaultPageable.pageSize = x.data?.size;
+          this.defaultPageable.length = x.data.totalElements;
+          this.defaultPageable.pageIndex = x.data.number;
+          this.defaultPageable.pageSize = x.data.size;
 
           this.setPageable(this.defaultPageable);
+          this.setSpotifyList(x.data.content);
+
           
         }),
         catchError(err => {

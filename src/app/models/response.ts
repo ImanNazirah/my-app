@@ -1,13 +1,13 @@
  export interface ResponseModel<T> {
     code: number;
     message: string;
-    data?: T[];
+    data: T[];
 }
 
 export interface PageableResponseModel<T> {
     code: number;
     message: string;
-    data?: {
+    data: {
         content: T[];
         totalElements: number;
         totalPages: number;
@@ -20,5 +20,5 @@ export interface PageableResponseModel<T> {
 export interface SingleDataResponseModel<T> {
     code: number;
     message: string;
-    data?: T;
+    data: T;
 }

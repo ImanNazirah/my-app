@@ -4,7 +4,11 @@
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filter Artist Name">
   </mat-form-field>
+  <button mat-raised-button (click)="createDialog()">Create</button>
+
 </div>
+
+
 
 <!-- Angular material table -->
 <div class="example-container mat-elevation-z8">
@@ -23,6 +27,21 @@
       <ng-container matColumnDef="genre">
         <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.genre}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <!-- <mat-cell *matCellDef="let element" >
+          <button mat-button >Edit</button>
+        </mat-cell> -->
+        <mat-cell *matCellDef="let element">
+          <button mat-button color="primary" aria-label="Edit Row" (click)="editData(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-button color="warn" aria-label="Edit Row" (click)="deleteData(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

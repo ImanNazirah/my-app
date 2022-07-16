@@ -30,7 +30,8 @@ import { TestListComponent } from './components/test/test-list/test-list.compone
 import { TestCreateComponent } from './components/test/test-create/test-create.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -64,6 +65,9 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
     AgGridModule.withComponents([])
   ],
   providers: [],

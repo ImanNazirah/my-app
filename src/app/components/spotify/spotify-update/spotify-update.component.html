@@ -1,1 +1,34 @@
-<p>spotify-update works!</p>
+<div [formGroup]="dataForm">
+    <div formGroupName="spotify">
+        <div>
+            <p>Enter Track Name  : <input matInput formControlName="trackName"></p>
+    
+    
+        </div>
+        <div>
+            <p>Enter Artist Name : <input matInput formControlName="artistName"></p>
+    
+        </div>
+        <div>
+            <p>Enter Genre : <input matInput formControlName="genre"></p>
+    
+        </div>
+        <div>
+            <p>Enter Popularity : <input matInput formControlName="popularity" type="number"></p>
+    
+        </div>
+    </div>
+ </div>
+<div>
+    <button
+    (click)="submitDialog()"
+    mat-flat-button
+    [color]="'primary'">
+    Okay
+    </button>
+    <button
+        (click)="closeDialog()"
+        mat-stroked-button>
+        Close
+    </button>
+</div>
