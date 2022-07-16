@@ -26,8 +26,6 @@ import { MyNavComponent } from './shared-view/my-nav/my-nav.component';
 import { SpotifyCreateComponent } from './components/spotify/spotify-create/spotify-create.component';
 import { SpotifyUpdateComponent } from './components/spotify/spotify-update/spotify-update.component';
 import { SpotifyListComponent } from './components/spotify/spotify-list/spotify-list.component';
-import { TestListComponent } from './components/test/test-list/test-list.component';
-import { TestCreateComponent } from './components/test/test-create/test-create.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -45,9 +43,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SpotifyCreateComponent,
     SpotifyUpdateComponent,
     SpotifyListComponent,
-    TestListComponent,
-    TestCreateComponent,
-  ],
+    ],
   imports: [
     BrowserModule,
     HttpClientModule,
