@@ -1,6 +1,6 @@
 export class Pageable {
 
-    length?: number;
-    pageIndex?: number;
-    pageSize?: number;
+    length!: number;
+    pageIndex!: number;
+    pageSize!: number;
 }

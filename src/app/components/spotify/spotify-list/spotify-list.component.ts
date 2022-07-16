@@ -138,7 +138,8 @@ export class SpotifyListComponent implements OnInit {
         this._spotifyService.createData(result).subscribe(
           resp=>{
             console.log("Showing data response upon create:::",resp);
-  
+            //to display data in table
+            this.setTableListing(this.viewListing$);
           }
         );
       }

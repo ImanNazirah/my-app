@@ -54,7 +54,23 @@ export class SpotifyService {
 
   createData(payload: Spotify): Observable<SingleDataResponseModel<Spotify>> {
 
-    return this._http.post<SingleDataResponseModel<Spotify>>(baseUrl,payload).pipe(
+    return this._http.post<SingleDataResponseModel<Spotify>>(baseUrl,payload)
+    .pipe(
+      tap((x:SingleDataResponseModel<Spotify>)=>{
+        
+        // Update the newly data list
+        let newList = [x.data, ...this._spotifyList$.value];;
+
+        //set the newly list
+        this.setSpotifyList(newList);
+
+        //set new pageable
+        this.defaultPageable.length = this._pageable$.value.length + 1;
+        this.defaultPageable.pageIndex = this._pageable$.value.pageIndex;
+        this.defaultPageable.pageSize = this._pageable$.value.pageSize;
+        this.setPageable(this.defaultPageable);
+ 
+      }),
       catchError(err => {
         console.log('Error createData SpotifyService : ',err);
         throw Observable.throw;
@@ -103,6 +119,12 @@ export class SpotifyService {
         
         //set the newly list
         this.setSpotifyList(newList);
+
+        //set new pageable
+        this.defaultPageable.length = this._pageable$.value.length - 1;
+        this.defaultPageable.pageIndex = this._pageable$.value.pageIndex;
+        this.defaultPageable.pageSize = this._pageable$.value.pageSize;
+        this.setPageable(this.defaultPageable);
 
       }),
       catchError(err => {
