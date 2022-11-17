@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Spotify } from '../models/spotify';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PageableResponseModel, ResponseModel, SingleDataResponseModel } from '../models/response';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Pageable } from '../models/pageable';
 
@@ -56,7 +56,7 @@ export class SpotifyService {
 
     return this._http.post<SingleDataResponseModel<Spotify>>(baseUrl,payload)
     .pipe(
-      tap((x:SingleDataResponseModel<Spotify>)=>{
+      map((x:SingleDataResponseModel<Spotify>)=>{
         
         // Update the newly data list
         let newList = [x.data, ...this._spotifyList$.value];;
@@ -70,6 +70,7 @@ export class SpotifyService {
         this.defaultPageable.pageSize = this._pageable$.value.pageSize;
         this.setPageable(this.defaultPageable);
  
+        return x;
       }),
       catchError(err => {
         console.log('Error createData SpotifyService : ',err);
@@ -83,7 +84,7 @@ export class SpotifyService {
 
     return this._http.put<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id,payload)
     .pipe(
-      tap((x:SingleDataResponseModel<Spotify>)=>{
+      map((x:SingleDataResponseModel<Spotify>)=>{
         
           //idex of specified id
           let index = this._spotifyList$.value.findIndex(function(element) {
@@ -94,6 +95,8 @@ export class SpotifyService {
 
           //set the newly list
           this.setSpotifyList(this._spotifyList$.value);
+
+          return x;
    
       }),
       catchError(err => {
@@ -107,7 +110,7 @@ export class SpotifyService {
   deleteData(id: number): Observable<SingleDataResponseModel<Spotify>> {
     return this._http.delete<SingleDataResponseModel<Spotify>>(baseUrl+'/'+id)
     .pipe(
-      tap((x:SingleDataResponseModel<Spotify>)=>{
+      map((x:SingleDataResponseModel<Spotify>)=>{
 
         // idex of specified id
         let index = this._spotifyList$.value.findIndex(function(element) {
@@ -126,6 +129,7 @@ export class SpotifyService {
         this.defaultPageable.pageSize = this._pageable$.value.pageSize;
         this.setPageable(this.defaultPageable);
 
+        return x;
       }),
       catchError(err => {
           console.log('Error delete SpotifyService : ',err);
@@ -150,7 +154,7 @@ export class SpotifyService {
 
       return this._http.get<PageableResponseModel<Spotify>>(baseUrl+'/search', header)
       .pipe(
-        tap((x:PageableResponseModel<Spotify>)=>{
+        map((x:PageableResponseModel<Spotify>)=>{
 
           this.defaultPageable.length = x.data.totalElements;
           this.defaultPageable.pageIndex = x.data.number;
@@ -159,7 +163,7 @@ export class SpotifyService {
           this.setPageable(this.defaultPageable);
           this.setSpotifyList(x.data.content);
 
-          
+          return x;
         }),
         catchError(err => {
           console.log('Error getByQueryData : ',err);

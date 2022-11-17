@@ -10,7 +10,7 @@ export class MergeTableListComponent{
 
   data :stateCountyItem[]= [
     { state: 'MN', county: '1', item: 0.297 },
-    { state: 'MN', county: '1', item: 0.04 },
+    { state: 'MN', county: '7', item: 0.04 },
     { state: 'MN', county: '3', item: 0.14 },
     { state: 'CA', county: '2', item: 0.019 },
     { state: 'CA', county: '3', item: 0.14 },
@@ -69,30 +69,20 @@ export class MergeTableListComponent{
   ];
 
 
-  constructor() { this.sortData();
+  constructor() {
+    this.sortData();
     this.transformData();
   }
 
-  // ngOnInit(): void {
-  // }
 
   public sortData() {
     
+    //sort state first then sort county
     this.dataExt=this.data
-    .sort((a:stateCountyItem, b:stateCountyItem) => a.state.localeCompare(b.state))
-    .map((x)=>{
+    .sort((a:stateCountyItem, b:stateCountyItem) => a.state.localeCompare(b.state)||a.county.localeCompare(b.county));
 
-      return x;
-    });
     
   }
-
-  // styleObject(row: number, Column: number): Object {
-  //   let obj: Object;
-  //   obj = { 'grid-row': '' + Number(row), 'grid-column': '' + Number(Column) };
-
-  //   return obj;
-  // }
 
   transformData(): void{
 
