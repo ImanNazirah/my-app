@@ -1,0 +1,18 @@
+
+<!-- <div class="grid-container">
+    <div *ngFor="let element of elements" class="grid-item">
+      <div [ngStyle]="styleObject(element.row, element.column)">{{element['name']}}</div>
+    </div>
+  </div> -->
+
+  <div *ngFor="let x of dataTransform">
+
+    <mat-grid-list [cols]="x.totalCol">
+        <div *ngFor="let y of x.elements">
+
+            <mat-grid-tile>{{y.name}}</mat-grid-tile>
+        </div>
+
+    </mat-grid-list>
+                
+  </div>

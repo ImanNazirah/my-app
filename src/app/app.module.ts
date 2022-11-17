@@ -15,7 +15,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { AgGridModule } from 'ag-grid-angular';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 
 //Component
 import { AppComponent } from './app.component';
@@ -30,6 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MergeTableListComponent } from './components/merge-table/merge-table-list/merge-table-list.component';
 
 
 
@@ -43,6 +44,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SpotifyCreateComponent,
     SpotifyUpdateComponent,
     SpotifyListComponent,
+    MergeTableListComponent
     ],
   imports: [
     BrowserModule,
@@ -64,6 +66,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
+    MatGridListModule ,
     AgGridModule.withComponents([])
   ],
   providers: [],
