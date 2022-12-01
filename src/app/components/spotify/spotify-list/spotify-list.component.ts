@@ -97,7 +97,8 @@ export class SpotifyListComponent implements OnInit {
 
   public applyFilter(event: Event): void {
 
-    this.inputSearch = (<any>event).target.value;
+    let inputEl = event.target as HTMLInputElement;
+    this.inputSearch = inputEl.value;
     this.queryParam.artistName = this.inputSearch;
 
     if(this.inputSearch == ''){

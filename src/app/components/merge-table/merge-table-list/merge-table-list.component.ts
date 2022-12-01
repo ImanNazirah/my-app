@@ -20,6 +20,9 @@ export class MergeTableListComponent{
 
   dataExt: stateCountyItem[] = [];
 
+  tableStateCounty : string[] = ['State', 'County', 'Item'];
+
+
   dataTransform : TransformDataElement[] = [];
 
   //let's assume the data is already in sort order row then column
@@ -75,19 +78,19 @@ export class MergeTableListComponent{
   }
 
 
-  public sortData() {
+  public sortData() :stateCountyItem[] {
     
     //sort state first then sort county
     this.dataExt=this.data
     .sort((a:stateCountyItem, b:stateCountyItem) => a.state.localeCompare(b.state)||a.county.localeCompare(b.county));
-
     
+    return this.dataExt;
   }
 
-  transformData(): void{
+  transformData(): TransformDataElement[]{
 
     //find distinct of rows first
-    let distinctRow :number[] = [...new Set(this.elements.map(x=>x.row))];
+    let distinctRow :number[] = [...new Set(this.elements.map((x:ElementsData)=>x.row))];
 
     //to transform from ElementsData to TransformDataElement
     distinctRow.map((y:number)=>{
@@ -106,7 +109,8 @@ export class MergeTableListComponent{
       
     })
 
-    
+    return this.dataTransform;
+
   }
 
 }
